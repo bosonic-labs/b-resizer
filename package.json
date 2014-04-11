@@ -1,0 +1,16 @@
+{
+  "name": "b-resizer",
+  "version": "0.0.0",
+  "description": "b-resizer ========",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "bosonic-test-tools": "*",
+    "grunt-bosonic": "*"
+  },
+  "dependencies": {
+    "bosonic": "*"
+  }
+}

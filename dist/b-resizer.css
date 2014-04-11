@@ -1,0 +1,16 @@
+b-resizer {
+  position: absolute;
+  background-color: #ccc;
+}
+
+b-resizer[right] {
+  top: 0px;
+  right: 0px;
+  width: 8px;
+  height: 100%;
+  cursor: col-resize;
+}
+
+.b-resizer-container {
+  position: relative;
+}
