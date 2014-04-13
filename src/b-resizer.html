@@ -5,25 +5,79 @@
             background-color: #ccc;
         }
 
-        :host[right] {
+        :host[vertical] {
             top: 0px;
-            right: 0px;
             width: 8px;
             height: 100%;
             cursor: col-resize;
+        }
+
+        :host[right] {
+            right: 0px;
+        }
+
+        :host[left] {
+            left: 0px;
+        }
+
+        :host[horizontal] {
+            height: 8px;
+            width: 100%;
+            cursor: row-resize;
+        }
+
+        :host[top] {
+            top: 0px;
+        }
+
+        :host[bottom] {
+            bottom: 0px;
         }
 
         .b-resizer-container {
             position: relative;
         }
     </style>
-    <template>
-        <div class="b-resizer-handle"></div>
-    </template>
     <script>
         ({
+            get left() {
+                return this.hasAttribute('left');
+            },
+
+            get right() {
+                return this.hasAttribute('right');
+            },
+
+            get vertical() {
+                return this.left || this.right;
+            },
+
+            get top() {
+                return this.hasAttribute('top');
+            },
+
+            get bottom() {
+                return this.hasAttribute('bottom');
+            },
+
+            get horizontal() {
+                return this.top || this.bottom;
+            },
+
             createdCallback: function() {
+                if (this.vertical) {
+                    this.setAttribute('vertical', '');
+                }
+                if (this.horizontal) {
+                    this.setAttribute('horizontal', '');
+                }
+                this.dimension = this.vertical ? 'width' : 'height';
+
                 this.parentNode.classList.add('b-resizer-container');
+                
+                if (this.left) {
+                    this.setPosition(this.parentNode, 'left', 0);
+                }
 
                 this.startListener = this.start.bind(this);
                 this.addEventListener('mousedown', this.startListener, false);
@@ -39,12 +93,30 @@
             },
 
             resize: function(e) {
-                var x = e.pageX,
-                    xdiff = x - this.previousPosition.x;
+                var diff = this.getPositionDiff(e);
 
-                this.updateSize(this.parentNode, 'width', xdiff);
+                if (this.vertical) {
+                    this.updateSize(this.parentNode, this.dimension, diff.x);
+
+                    if (this.left) {
+                        this.updatePosition(this.parentNode, 'left', - diff.x);
+                    }
+                }
+
+                if (this.horizontal) {
+                    this.updateSize(this.parentNode, this.dimension, this.top ? - diff.y : diff.y);
+                }
+                
                 
                 this.refreshPreviousPosition(e);
+            },
+
+            getPositionDiff: function(e) {
+                var x = e.pageX,
+                    y = e.pageY,
+                    xdiff = this.left ? this.previousPosition.x - x : x - this.previousPosition.x,
+                    ydiff = y - this.previousPosition.y;
+                return { x: xdiff, y: ydiff };
             },
 
             refreshPreviousPosition: function(e) {
@@ -62,6 +134,19 @@
             updateSize: function(node, dimension, diff) {
                 var currentSize = this.getSize(node, dimension);
                 this.setSize(node, dimension, currentSize + diff);
+            },
+
+            getPosition: function(node, side) {
+                return parseInt(node.style[side].replace('px', ''));
+            },
+
+            setPosition: function(node, side, value) {
+                node.style[side] = value + 'px';
+            },
+
+            updatePosition: function(node, side, diff) {
+                var currentPos = this.getPosition(node, side);
+                this.setPosition(node, side, currentPos + diff);
             },
 
             stop: function(e) {

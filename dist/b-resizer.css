@@ -3,12 +3,33 @@ b-resizer {
   background-color: #ccc;
 }
 
-b-resizer[right] {
+b-resizer[vertical] {
   top: 0px;
-  right: 0px;
   width: 8px;
   height: 100%;
   cursor: col-resize;
+}
+
+b-resizer[right] {
+  right: 0px;
+}
+
+b-resizer[left] {
+  left: 0px;
+}
+
+b-resizer[horizontal] {
+  height: 8px;
+  width: 100%;
+  cursor: row-resize;
+}
+
+b-resizer[top] {
+  top: 0px;
+}
+
+b-resizer[bottom] {
+  bottom: 0px;
 }
 
 .b-resizer-container {
