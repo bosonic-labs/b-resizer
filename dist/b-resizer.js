@@ -3,13 +3,19 @@
             left: {
                 enumerable: true,
                 get: function () {
-                    return this.hasAttribute('left');
+                    return this.direction === 'left';
                 }
             },
             right: {
                 enumerable: true,
                 get: function () {
-                    return this.hasAttribute('right');
+                    return this.direction === 'right';
+                }
+            },
+            direction: {
+                enumerable: true,
+                get: function () {
+                    return this.hasAttribute('direction') ? this.getAttribute('direction') : null;
                 }
             },
             vertical: {
@@ -21,19 +27,25 @@
             top: {
                 enumerable: true,
                 get: function () {
-                    return this.hasAttribute('top');
+                    return this.direction === 'top';
                 }
             },
             bottom: {
                 enumerable: true,
                 get: function () {
-                    return this.hasAttribute('bottom');
+                    return this.direction === 'bottom';
                 }
             },
             horizontal: {
                 enumerable: true,
                 get: function () {
                     return this.top || this.bottom;
+                }
+            },
+            omni: {
+                enumerable: true,
+                get: function () {
+                    return !this.top && !this.bottom && !this.left && !this.right;
                 }
             },
             createdCallback: {
@@ -45,13 +57,21 @@
                     if (this.horizontal) {
                         this.setAttribute('horizontal', '');
                     }
-                    this.dimension = this.vertical ? 'width' : 'height';
+                    if (this.omni) {
+                        this.setAttribute('omni', '');
+                    }
                     this.parentNode.classList.add('b-resizer-container');
                     if (this.left) {
                         this.setPosition(this.parentNode, 'left', 0);
                     }
                     this.startListener = this.start.bind(this);
                     this.addEventListener('mousedown', this.startListener, false);
+                }
+            },
+            detachedCallback: {
+                enumerable: true,
+                value: function () {
+                    this.removeEventListener('mousedown', this.startListener, false);
                 }
             },
             start: {
@@ -69,14 +89,14 @@
                 enumerable: true,
                 value: function (e) {
                     var diff = this.getPositionDiff(e);
-                    if (this.vertical) {
-                        this.updateSize(this.parentNode, this.dimension, diff.x);
+                    if (this.omni || this.vertical) {
+                        this.updateSize(this.parentNode, 'width', diff.x);
                         if (this.left) {
                             this.updatePosition(this.parentNode, 'left', -diff.x);
                         }
                     }
-                    if (this.horizontal) {
-                        this.updateSize(this.parentNode, this.dimension, this.top ? -diff.y : diff.y);
+                    if (this.omni || this.horizontal) {
+                        this.updateSize(this.parentNode, 'height', this.top ? -diff.y : diff.y);
                     }
                     this.refreshPreviousPosition(e);
                 }

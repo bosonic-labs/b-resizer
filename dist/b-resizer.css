@@ -3,6 +3,14 @@ b-resizer {
   background-color: #ccc;
 }
 
+b-resizer[omni] {
+  width: 8px;
+  height: 8px;
+  bottom: 0px;
+  right: 0px;
+  cursor: se-resize;
+}
+
 b-resizer[vertical] {
   top: 0px;
   width: 8px;
@@ -10,11 +18,11 @@ b-resizer[vertical] {
   cursor: col-resize;
 }
 
-b-resizer[right] {
+b-resizer[direction='right'] {
   right: 0px;
 }
 
-b-resizer[left] {
+b-resizer[direction='left'] {
   left: 0px;
 }
 
@@ -24,11 +32,11 @@ b-resizer[horizontal] {
   cursor: row-resize;
 }
 
-b-resizer[top] {
+b-resizer[direction='top'] {
   top: 0px;
 }
 
-b-resizer[bottom] {
+b-resizer[direction='bottom'] {
   bottom: 0px;
 }
 

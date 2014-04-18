@@ -1,16 +1,25 @@
 {
   "name": "b-resizer",
-  "version": "0.0.0",
-  "description": "b-resizer ========",
+  "version": "0.1.0",
+  "description": "A Bosonic element which may be used to add resizable behavior to an element.",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bosonic/b-resizer.git"
+  },
+  "author": "Raphaël Rougeron <goldoraf@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bosonic/b-resizer/issues"
+  },
   "devDependencies": {
     "bosonic-test-tools": "*",
-    "grunt-bosonic": "*"
+    "grunt-bosonic": ">=0.4.0"
   },
   "dependencies": {
-    "bosonic": "*"
+    "bosonic": ">=0.4.0"
   }
 }
