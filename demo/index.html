@@ -59,6 +59,11 @@
     </div>
 
     <script type="text/javascript">
-        
+        window.addEventListener('WebComponentsReady', function() {
+            var resizer = document.querySelector('b-resizer');
+            resizer.addEventListener('resize', function(e) {
+                console.log(e);
+            }, false);
+        });
     </script>
 </body>

@@ -1,6 +1,6 @@
 {
   "name": "b-resizer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Bosonic element which may be used to add resizable behavior to an element.",
   "main": "Gruntfile.js",
   "scripts": {

@@ -130,6 +130,12 @@
                 enumerable: true,
                 value: function (node, dimension, size) {
                     node.style[dimension] = size + 'px';
+                    this.dispatchEvent(new CustomEvent('resize', {
+                        detail: {
+                            dimension: dimension,
+                            size: size
+                        }
+                    }));
                 }
             },
             updateSize: {
